@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
 using Behaviours;
+using System.Collections.Generic;
 
 namespace Controllers
 {
     sealed class TimeControl : MonoBehaviour
     {
         private ClockTime _clockTime;
-        private SetupClock _alarmClock;
 
         public ClockTime ClockTime => _clockTime;
-        public SetupClock AlarmClock => _alarmClock;
+
+        private List<IEventSubscription> _eventSubscriptions;
 
         private void Awake()
         {
             _clockTime = new ClockTime();
-            _alarmClock = new SetupClock();
+
+            CreateSubscriptionList();
         }
         private void Start()
         {
@@ -22,13 +24,23 @@ namespace Controllers
         }
         private void OnEnable()
         {
-            _clockTime.Subscribe();
-            _alarmClock.Subscribe();
+            foreach (var subscription in _eventSubscriptions)
+            {
+                subscription.Subscribe();
+            }
         }
         private void OnDisable()
         {
-            _clockTime.Unsubscribe();
-            _alarmClock.Unsubscribe();
+            foreach (var subscription in _eventSubscriptions)
+            {
+                subscription.Unsubscribe();
+            }
+        }
+
+        private void CreateSubscriptionList()
+        {
+            _eventSubscriptions = new List<IEventSubscription>(4);
+            _eventSubscriptions.Add(_clockTime);
         }
     }
 }

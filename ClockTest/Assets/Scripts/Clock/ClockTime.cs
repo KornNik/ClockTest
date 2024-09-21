@@ -82,7 +82,7 @@ namespace Behaviours
 
         protected void EndAsync()
         {
-
+            _isTimeCanTick = false;
         }
         protected async UniTask TimeTick()
         {

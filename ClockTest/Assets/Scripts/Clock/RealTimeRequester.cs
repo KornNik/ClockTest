@@ -56,7 +56,7 @@ namespace Behaviours
                     case UnityWebRequest.Result.ProtocolError:
                         break;
                     case UnityWebRequest.Result.Success:
-                        if (url == YANDEX_TIME_API)
+                        if (string.Equals(url, YANDEX_TIME_API))
                         {
                             DateTimeYandexApi dateTime = JsonUtility.FromJson<DateTimeYandexApi>(webRequest.downloadHandler.text);
                             Debug.Log(dateTime.time);

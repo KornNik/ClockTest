@@ -1,7 +1,6 @@
 ﻿using Helpers.Extensions;
 using Helpers.Observer;
 using System;
-using UnityEngine;
 using TMPro;
 
 namespace GameUI
